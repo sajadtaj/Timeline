@@ -1,5 +1,5 @@
 # Timeline
 
- timeline modual in python
+##### timeline modual in python
 
-D:\My Code\Github\Timeline\.gitattributes
+The main task of this module is to draw time series data along with historical information as a **timeline**.
