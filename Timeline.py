@@ -21,7 +21,7 @@ os.chdir(rf'E:\Prefessional  Python\Clone From Git\Timeline')
 #            Page configs             |
 #-------------------------------------+
 st.set_page_config(
-    page_title="Ex-stream-ly Cool App",
+    page_title="Timeline",
     page_icon="🧊",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -31,7 +31,16 @@ st.set_page_config(
         'About': "# This is a header. This is an *extremely* cool app!"
     }
 )
-
+st.markdown("""
+        <style>
+               .block-container {
+                    padding-top: 0rem;
+                    padding-bottom: 0rem;
+                    padding-left: 3rem;
+                    padding-right: 0rem;
+                }
+        </style>
+        """, unsafe_allow_html=True)
 #--------------------------------------------------------------------+
 #                               Read Files                           |
 #--------------------------------------------------------------------+
@@ -59,8 +68,6 @@ start = gold[gold['Date'].values  > start_date.strftime("%Y-%m-%d") ]
 end   = start[start['Date'].values < end_date.strftime("%Y-%m-%d")    ]
 price = end.copy()
 
-st.title(start_date.strftime("%Y-%m-%d"))
-st.title(end_date.strftime("%Y-%m-%d"))
 # line price in price DataFrame
 price.reset_index(inplace=True)
 
@@ -126,6 +133,12 @@ for index, row in justnews.iterrows():
         )
 
 fig.update_layout(annotations=annotations)
+fig.update_layout(
+    autosize=True,
+    width=1080,
+    # height=750,
+    margin=dict(l=0, r=0, t=0, b=0)
+    )
 
 
 
