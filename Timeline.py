@@ -34,7 +34,7 @@ st.set_page_config(
 st.markdown("""
         <style>
                .block-container {
-                    padding-top: 0rem;
+                    padding-top: 1.5rem;
                     padding-bottom: 0rem;
                     padding-left: 3rem;
                     padding-right: 0rem;
@@ -135,9 +135,9 @@ for index, row in justnews.iterrows():
 fig.update_layout(annotations=annotations)
 fig.update_layout(
     autosize=True,
-    width=1080,
+    width=1300,
     # height=750,
-    margin=dict(l=0, r=0, t=0, b=0)
+    margin=dict(l=0, r=0, t=30, b=0)
     )
 
 
@@ -155,8 +155,8 @@ tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
 
 # st.plotly_chart(fig)
 
-tab1.subheader("A tab with a chart")
+tab1.subheader("Gold Price + Event")
 tab1.plotly_chart(fig)
 
-tab2.subheader("A tab with the data")
+tab2.subheader("DataFrame")
 tab2.write(justnews)
