@@ -1,17 +1,25 @@
+#--------------------------------------------------------------------+
+#                               Import library                       |
+#--------------------------------------------------------------------+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.dates as mdates
-from datetime import datetime
+import datetime
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import streamlit as st
+
+
+#--------------------------------------------------------------------+
+#                         Set Root Direction                         |
+#--------------------------------------------------------------------+
 import os 
 os.chdir(rf'E:\Prefessional  Python\Clone From Git\Timeline')
-
-gold = pd.read_pickle(rf'Data\CleanData.csv') 
-
+#-------------------------------------+
+#            Page configs             |
+#-------------------------------------+
 st.set_page_config(
     page_title="Ex-stream-ly Cool App",
     page_icon="🧊",
@@ -24,44 +32,46 @@ st.set_page_config(
     }
 )
 
+#--------------------------------------------------------------------+
+#                               Read Files                           |
+#--------------------------------------------------------------------+
+gold = pd.read_pickle(rf'Data\CleanData.csv') 
 
-# st.set_page_config(page_title="The Ramsey Highlights", layout="wide")
-# st.markdown(
-#     """
-#     <style>
-#     [data-testid="stSidebar"][aria-expanded="true"] > div:first-child{
-#         width: 400px;
-#     }
-#     [data-testid="stSidebar"][aria-expanded="false"] > div:first-child{
-#         width: 400px;
-#         margin-left: -400px;
-#     }
-     
-#     """,
-#     unsafe_allow_html=True,
-# )
-# st.markdown(
-#     f'''
-#         <style>
-#             .sidebar .sidebar-content {{
-#                 width: 375px;
-#             }}
-#         </style>
-#     ''',
-#     unsafe_allow_html=True
-# )
+#--------------------------------------------------------------------+
+#                           Preperation Data                         |
+#--------------------------------------------------------------------+
 
-start = gold[gold['Date'] > '2019-01-02']
-end = start[start['Date'] < '2019-10-02']
+start_date = st.sidebar.date_input(
+    label="Start Date",
+    value=datetime.date(2019, 1, 2),
+    min_value = datetime.date(2019, 1, 2),
+    max_value = datetime.date(2021, 4, 22),
+    )
+
+end_date = st.sidebar.date_input(
+    label="End Date",
+    value=datetime.date(2021, 4, 22),
+    min_value = datetime.date(2019, 1, 2) ,
+    max_value = datetime.date(2021, 4, 22),
+    )
+
+start = gold[gold['Date'].values  > start_date.strftime("%Y-%m-%d") ]
+end   = start[start['Date'].values < end_date.strftime("%Y-%m-%d")    ]
 price = end.copy()
 
+st.title(start_date.strftime("%Y-%m-%d"))
+st.title(end_date.strftime("%Y-%m-%d"))
 # line price in price DataFrame
 price.reset_index(inplace=True)
 
 # Event point in justnews DataFrame
 justnews=end.dropna()
-
-
+All_Events = justnews['Description'].unique()
+Select_event = st.sidebar.selectbox("Select Event", All_Events)
+justnews = justnews[justnews['Description']== Select_event]
+#--------------------------------------------------------------------+
+#                            Fiugure page 1                          |
+#--------------------------------------------------------------------+
 fig = go.Figure()
 annotations=[]
 fig.add_trace(go.Scatter(x=end['Date'], y=end['Close'],
@@ -116,6 +126,17 @@ for index, row in justnews.iterrows():
         )
 
 fig.update_layout(annotations=annotations)
+
+
+
+#--------------------------------------------------------------------+
+#                            Streamlit config                        |
+#--------------------------------------------------------------------+
+
+
+#-------------------------------------+
+#              Set Tabs               |
+#-------------------------------------+
 
 tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
 
