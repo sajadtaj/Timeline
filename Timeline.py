@@ -1,3 +1,4 @@
+# Add  
 #--------------------------------------------------------------------+
 #                               Import library                       |
 #--------------------------------------------------------------------+
@@ -16,7 +17,8 @@ import streamlit as st
 #                         Set Root Direction                         |
 #--------------------------------------------------------------------+
 import os 
-os.chdir(rf'E:\Prefessional  Python\Clone From Git\Timeline')
+# os.chdir(rf'E:\Prefessional  Python\Clone From Git\Timeline')   # Work
+os.chdir(rf'D:\My Code\Github\Timeline')   # Home
 #-------------------------------------+
 #            Page configs             |
 #-------------------------------------+
@@ -56,7 +58,6 @@ start_date = st.sidebar.date_input(
     min_value = datetime.date(2019, 1, 2),
     max_value = datetime.date(2021, 4, 22),
     )
-
 end_date = st.sidebar.date_input(
     label="End Date",
     value=datetime.date(2021, 4, 22),
@@ -108,7 +109,7 @@ for index, row in justnews.iterrows():
                             bordercolor='#A0C49D',
                             captureevents =True,
                             opacity = 0.7,
-                            hovertext=f"{row['Description']} \n {row['Close']}",
+                            hovertext=f" Actual:{row['Actual event']} \t  Evaluation:{row['Evaluation data']} ",
                             clicktoshow="onoff",
                             
                             xanchor= 'auto',
