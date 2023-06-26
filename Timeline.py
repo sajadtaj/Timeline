@@ -126,7 +126,7 @@ for index, row in justnews.iterrows():
                             font=dict(
                                 color='#19376D',
                                 family="Balto",
-                                size=8
+                                size=11
                             )
                             
                             
